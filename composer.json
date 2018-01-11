@@ -1,0 +1,16 @@
+{
+    "name": "frame-php/module-sys",
+    "description": "System module for the FramePHP framework",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hilkiah Makemo",
+            "email": "hilkiah.makemo@skywest.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "frame-php/framework": "dev-master"
+    }
+}
