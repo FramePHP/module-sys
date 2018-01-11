@@ -32,15 +32,19 @@ $App->share('Request', function(){
 */
 $App->share('Routing', function(){
 
-    $routes = [];
-    $router  = APP_ROOT."app/site/httpobjects/routing";
-
-    foreach(glob($router.'/*', GLOB_NOSORT) as $route){
-      $routes[] = require $route;
+		$routes_path = app_path('/site/httpobjects/routes/');
+    $route_files = glob("$routes_path/*", GLOB_NOSORT);
+    $routes = array();
+    foreach ($route_files as $file_path) {
+      $routes[] = require $file_path;
     }
+    if(empty($routes)) die("NO ROUTES ARE FOUND");
+    dump($routes, $route_files);
+
     return new Routing( $routes );
 
 });
+dump($App->Routing);
 
 /**
  ********************************************************
