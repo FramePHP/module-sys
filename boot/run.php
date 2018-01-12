@@ -5,7 +5,7 @@ use FramePHP\Auth\Configs;
 use FramePHP\Http\Request;
 use FramePHP\Http\Response;
 use FramePHP\Http\Routing;
-use Zend\Diactoros\Response\SapiEmitter;
+use FramePHP\Http\Emitter;
 
 
 $APP = Application::isRunning();
