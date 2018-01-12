@@ -19,7 +19,7 @@ $APP = Application::isRunning();
  * check it for validity and decide what to do next...
 */
 $App->share('Request', function(){
-	$request = Request::fromGlobals($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
+	  $request = Request::fromGlobals();
     return $request;
 });
 
@@ -31,19 +31,19 @@ $App->share('Request', function(){
  * how to re-route the user from the request to the ap-
  * propriate response.
 */
-$App->share('Routing', function(){
+$App->share('Routing', function() use (&$App){
 
 		$routes_path = app_path('/site/httpobjects/routes/');
     $route_files = glob("$routes_path/*.*", GLOB_NOSORT);
 
     $routes = array();
-    
+
     foreach ($route_files as $file_path) {
       $routes[] = require $file_path;
     }
     if(empty($routes)) return;
-
-    return new Routing( array_filter($routes) );
+    $Routing = new Routing($App);
+    return $Routing->make(array_filter($routes));
 
 });
 
