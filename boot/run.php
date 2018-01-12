@@ -18,7 +18,7 @@ $APP = Application::isRunning();
  * check it for validity and decide what to do next...
 */
 $App->share('Request', function(){
-	$request = Request::createFromGlobals();
+	$request = Request::fromGlobals();
     return $request;
 });
 
