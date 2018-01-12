@@ -5,6 +5,7 @@ use FramePHP\Auth\Configs;
 use FramePHP\Http\Request;
 use FramePHP\Http\Response;
 use FramePHP\Http\Routing;
+use Zend\Diactoros\Response\SapiEmitter;
 
 
 $APP = Application::isRunning();
@@ -18,7 +19,7 @@ $APP = Application::isRunning();
  * check it for validity and decide what to do next...
 */
 $App->share('Request', function(){
-	$request = Request::fromGlobals();
+	$request = Request::fromGlobals($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
     return $request;
 });
 
@@ -33,18 +34,21 @@ $App->share('Request', function(){
 $App->share('Routing', function(){
 
 		$routes_path = app_path('/site/httpobjects/routes/');
-    $route_files = glob("$routes_path/*", GLOB_NOSORT);
+    $route_files = glob("$routes_path/*.*", GLOB_NOSORT);
+
     $routes = array();
+    
     foreach ($route_files as $file_path) {
       $routes[] = require $file_path;
     }
-    if(empty($routes)) die("NO ROUTES ARE FOUND");
-    dump($routes, $route_files);
+    if(empty($routes)) return;
 
-    return new Routing( $routes );
+    return new Routing( array_filter($routes) );
 
 });
-dump($App->Routing);
+
+$App->share('Emitter', SapiEmitter::class);
+// dump($App->Routing);
 
 /**
  ********************************************************
