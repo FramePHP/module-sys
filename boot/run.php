@@ -19,8 +19,7 @@ $APP = Application::isRunning();
  * check it for validity and decide what to do next...
 */
 $App->share('Request', function(){
-	  $request = Request::fromGlobals();
-    return $request;
+    return Request::fromGlobals();
 });
 
 /**
@@ -32,22 +31,9 @@ $App->share('Request', function(){
  * propriate response.
 */
 $App->share('Routing', function() use (&$App){
-
-		$routes_path = app_path('/site/httpobjects/routes/');
-    $route_files = glob("$routes_path/*.*", GLOB_NOSORT);
-
-    $routes = array();
-
-    foreach ($route_files as $file_path) {
-      $routes[] = require $file_path;
-    }
-    if(empty($routes)) return;
-    $Routing = new Routing($App);
-    return $Routing->make(array_filter($routes));
-
+    $routes_dir = app_path('site/httpobjects/routes');
+    return new Routing($App, $routes_dir);
 });
-
-$App->share('Emitter', SapiEmitter::class);
 // dump($App->Routing);
 
 /**
@@ -57,9 +43,8 @@ $App->share('Emitter', SapiEmitter::class);
  * At this point we now need all configurations the app is
  * setting or has set and we need to load the into the app
 */
-$App->share('Configs', function(){
-
-  return new Configs();
+$App->share('Configs', function(){ 
+  return new Configs( sys_path('conf') );  
 });
 
 /**
