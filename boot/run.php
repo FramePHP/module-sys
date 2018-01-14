@@ -6,8 +6,8 @@ use FramePHP\Http\Request;
 use FramePHP\Http\Response;
 use FramePHP\Http\Routing;
 use FramePHP\Http\Emitter;
-use Twig\Twig_Loader_Filesystem;
-use Twig\Twig_Loader_Array;
+use Twig\Loader\Twig_Loader_Array;
+use Twig\Loader\Twig_Loader_Filesystem;
 
 
 $APP = Application::isRunning();
