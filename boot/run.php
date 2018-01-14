@@ -6,9 +6,7 @@ use FramePHP\Http\Request;
 use FramePHP\Http\Response;
 use FramePHP\Http\Routing;
 use FramePHP\Http\Emitter;
-use Twig\Loader\Twig_Loader_Array;
-use Twig\Loader\Twig_Loader_Filesystem;
-
+use FramePHP\View\Loader;
 
 $APP = Application::isRunning();
 
@@ -57,12 +55,7 @@ $App->share('Configs', function(){
  * setting or has set and we need to load the into the app
 */
 $App->share('Template', function($params){
-  if(is_array($params)){
-    $loader = new Twig_Loader_Array($params);
-  }
-  else{
-    $loader = new Twig_Loader_Filesystem($params);
-  }
+  $loader = new Loader($params);
   return new Template($loader, config('template'));
 });
 
