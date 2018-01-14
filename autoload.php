@@ -2,7 +2,7 @@
 
 
 
-$GetFiles = function($folder, $pattern) 
+$GetFiles = function($folder, $pattern)
 {
     $fileList = array();
 
