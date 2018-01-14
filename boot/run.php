@@ -7,6 +7,7 @@ use FramePHP\Http\Response;
 use FramePHP\Http\Routing;
 use FramePHP\Http\Emitter;
 use FramePHP\View\Loader;
+use FramePHP\View\Template;
 
 $APP = Application::isRunning();
 
@@ -54,9 +55,9 @@ $App->share('Configs', function(){
  * At this point we now need all configurations the app is
  * setting or has set and we need to load the into the app
 */
-$App->share('Template', function($params){
-  $loader = new Loader($params);
-  return new Template($loader, config('template'));
+$App->share('Template', function(){
+  $templates = APP_ROOT.'app'.DS.'*'.DS.'templates'.DS;
+  return new Template( glob($templates, GLOB_NOSORT) );
 });
 
 /**
